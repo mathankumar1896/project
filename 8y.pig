@@ -1,0 +1,38 @@
+pro = load  '/project/fin'  using  PigStorage('\t')  AS (s_no:int,case_status:chararray, employer_name:chararray, soc_name:chararray, job_title:chararray, full_time_position:chararray,prevailing_wage:long,year:chararray, worksite:chararray, longitute:long, latitute:long);
+--dump pro;
+kk = filter pro by case_status == 'CERTIFIED' or case_status == 'CERTIFIED-WITHDRAWN';
+--dump kk;
+pr = filter kk by $5 == 'Y';
+--dump pr;
+kl = group pr by ($7,$4);
+--dump kl;
+ad = foreach kl generate flatten(group), AVG(pr.$6);
+--dump ad;
+hy = filter ad by $0 == '2011';
+--dump hy;
+uy = order hy by $2 desc;
+--dump uy;
+hi = filter ad by $0 == '2012';
+--dump hi;
+uy12 = order hi by $2 desc;
+--dump uy12;
+hyu = filter ad by $0 == '2013';
+--dump hyu;
+uy13 = order hyu by $2 desc;
+--dump uy13;.
+hy14 = filter ad by $0 == '2014';
+--dump hy14;
+uy14 = order hy14 by $2 desc;
+--dump uy14;
+hy15 = filter ad by $0 == '2015';
+--dump hy15;
+uy15 = order hy15 by $2 desc;
+--dump uy15;
+hy16 = filter ad by $0 == '2016';
+--dump hy16;
+uy16 = order hy16 by $2 desc;
+--dump uy16;
+uni = UNION uy,uy12,uy13,uy14,uy15,uy16;
+--dump uni;
+de = order uni by $0 asc;
+dump de

@@ -1,0 +1,7 @@
+select year,job_title,count(job_title) as tot from h1b_final where year = 2012 and job_title = "DATA ENGINEER" group by year,job_title;
+			18
+2012	DATA ENGINEER	32
+			41
+			89
+			160
+			251
